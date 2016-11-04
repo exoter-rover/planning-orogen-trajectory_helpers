@@ -1,0 +1,34 @@
+name "trajectory_helpers"
+
+
+import_types_from "base"
+import_types_from "trajectory_helpersTypes.hpp"
+
+task_context "TrajectoryRefiner" do
+    needs_configuration
+
+    input_port('goal_pose', 'base/samples/RigidBodyState').
+        doc("Goal pose in the world")
+    
+    input_port('waypoints_in', '/std/vector<base::Waypoint>').
+        doc "Waypoint list."
+
+    output_port('waypoints_out', '/std/vector<base::Waypoint>').
+        doc "Waypoint list."
+
+    port_driven
+end
+
+
+task_context "GoalGenerator" do
+   needs_configuration
+
+    property("goal_position", "base/Vector2d").
+        doc("(X,Y) goal position of the robot")
+    
+    property("goal_heading", "double").
+        doc("Goal heading of the robot in degrees")
+
+   output_port('goal_pose', 'base/samples/RigidBodyState').
+        doc("Goal pose for which the environment will be sensed.")
+end
