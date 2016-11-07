@@ -1,0 +1,8 @@
+--- name:default
+# Goal heading of the robot in degrees
+goal_heading: 90.0
+# (X,Y) goal position of the robot
+goal_position:
+  data:
+  - 6.0
+  - 6.0
