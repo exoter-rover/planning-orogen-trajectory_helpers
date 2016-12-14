@@ -90,7 +90,7 @@ void TrajectoryRefiner::cleanupHook()
 void TrajectoryRefiner::addGoal(){
     waypointsOut.back().heading      = goalPose.getYaw();
     waypointsOut.back().tol_position = 0.05;
-    waypointsOut.back().tol_heading  = 0.10;
+    waypointsOut.back().tol_heading  = 2.0/180.0*M_PI;
 }
 
 bool TrajectoryRefiner::preprocessPath(){
