@@ -26,12 +26,40 @@
 #include "trajectory_helpers/GoalGeneratorBase.hpp"
 
 namespace trajectory_helpers {
+    enum ButtonName
+    {
+        X,
+        A,
+        B,
+        Y,
+        LB,
+        RB,
+        LT,
+        RT,
+        BACK,
+        START,
+        LJOY,
+        RJOY
+    };
+
     class GoalGenerator : public GoalGeneratorBase
     {
 	friend class GoalGeneratorBase;
     protected:
-        base::samples::RigidBodyState goalPose;
+        // Inputs 
+        controldev::RawCommand joystick_command;
 
+        // - - - Member variables - - -
+        bool initialized, newGoal;
+        int currentGoal, numPoints, counter;
+        double heading;
+        // Deadband of small joystick displacements
+        double joystickDeadbandSq; 
+        std::vector<double> xpos;
+        std::vector<double> ypos;
+
+        // Output
+        base::samples::RigidBodyState goalPose;           
 
     public:
         GoalGenerator(std::string const& name = "traversability_explorer::GoalGenerator");

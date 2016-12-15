@@ -1,8 +1,9 @@
 name "trajectory_helpers"
 
-
-import_types_from "base"
 import_types_from "trajectory_helpersTypes.hpp"
+import_types_from "controldev/ControlDevTypes.hpp"
+import_types_from "base"
+
 
 task_context "TrajectoryRefiner" do
     needs_configuration
@@ -23,12 +24,28 @@ end
 task_context "GoalGenerator" do
    needs_configuration
 
-    property("goal_position", "base/Vector2d").
-        doc("(X,Y) goal position of the robot")
-    
+    # Properties    
+    property('goal_index', 'int').
+        doc("Index of the initial goal")
     property("goal_heading", "double").
         doc("Goal heading of the robot in degrees")
+    property("joystick_deadband", "double").
+        doc("Deadband of joystick displacement when calculating the heading.")
+    
+    property("xpos","/std/vector</double>").
+        doc "List containing x-coordinates of possible goals."
+    property("ypos","/std/vector</double>").
+        doc "List containing y-coordinates of possible goals."
+    
+    # Input ports
+    input_port("raw_command", "/controldev/RawCommand").
+        doc("Input from joystick to toggle the panorama mode")
 
-   output_port('goal_pose', 'base/samples/RigidBodyState').
+    # Output ports
+    output_port('goal_pose', 'base/samples/RigidBodyState').
         doc("Goal pose for which the environment will be sensed.")
+    output_port('current_goal', 'int').
+        doc("Index of the current goal")
+
+    port_driven
 end
