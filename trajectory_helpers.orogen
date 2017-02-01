@@ -7,6 +7,12 @@ import_types_from "base"
 
 task_context "TrajectoryRefiner" do
     needs_configuration
+    
+    property("goal_heading_tol", "double").
+        doc("Goal heading tolerance in degrees")
+
+    property("goal_position_tol", "double").
+        doc("Goal position tolerance in meters")
 
     input_port('goal_pose', 'base/samples/RigidBodyState').
         doc("Goal pose in the world")

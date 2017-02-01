@@ -69,7 +69,7 @@ bool GoalGenerator::configureHook()
         numPoints = xpos.size();
     }
 
-    // Selected goal indexe is valid:
+    // Selected goal index is valid:
     if ( currentGoal > xpos.size()-1 || currentGoal < 0){
         std::cerr << "\nError in GoalGenerator::configureHook()\n"
                 << "Index: " << currentGoal << " is out of bounds: {0, ..., " << xpos.size() << "}.\n"

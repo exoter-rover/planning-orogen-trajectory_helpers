@@ -55,7 +55,6 @@ bool TrajectoryRefiner::startHook()
 void TrajectoryRefiner::updateHook()
 {
     TrajectoryRefinerBase::updateHook();
-    //std::cout << "TrajectoryRefinerBase::updateHook() with " << waypointsIn.size() << std::endl;
     int rtt_return = _goal_pose.readNewest(goalPose);
     if(rtt_return  == RTT::NewData && rtt_return  != RTT::NoData) {
         goalPoseSet = true;
@@ -63,7 +62,6 @@ void TrajectoryRefiner::updateHook()
 
     rtt_return = _waypoints_in.readNewest(waypointsIn);  
     if(rtt_return  == RTT::NewData ) { // Trajectory input contains new data
-        //convert to driver format
         if (preprocessPath() & goalPoseSet){
             addGoal();
         }
@@ -89,8 +87,9 @@ void TrajectoryRefiner::cleanupHook()
 
 void TrajectoryRefiner::addGoal(){
     waypointsOut.back().heading      = goalPose.getYaw();
-    waypointsOut.back().tol_position = 0.05;
-    waypointsOut.back().tol_heading  = 2.0/180.0*M_PI;
+    waypointsOut.back().tol_position = _goal_position_tol.value() > 0 ? _goal_position_tol.value() : 0.05;
+    waypointsOut.back().tol_heading  = _goal_heading_tol.value()  > 0 ? _goal_heading_tol.value()  : 2.0;
+    waypointsOut.back().tol_heading /= 180.0*M_PI;
 }
 
 bool TrajectoryRefiner::preprocessPath(){
