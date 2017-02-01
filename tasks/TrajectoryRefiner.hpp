@@ -37,6 +37,7 @@ namespace trajectory_helpers {
         std::vector<base::Waypoint> waypointsOut;
         base::samples::RigidBodyState goalPose;
         bool goalPoseSet;
+        double goal_position_tol, goal_heading_tol;
     public:
         
         TrajectoryRefiner(std::string const& name = "trajectory_helpers::TrajectoryRefiner");

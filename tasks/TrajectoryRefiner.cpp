@@ -44,6 +44,11 @@ bool TrajectoryRefiner::configureHook()
     if (! TrajectoryRefinerBase::configureHook())
         return false;
     goalPoseSet = false;
+    goal_position_tol = _goal_position_tol.value() > 0 ? _goal_position_tol.value() : 0.05;
+    goal_heading_tol  = _goal_heading_tol.value()  > 0 ? _goal_heading_tol.value()/180.0*M_PI : 2.0/180.0*M_PI;
+    std::cout << "TrajectoryRefiner::configureHook() default tolerance " 
+    << goal_position_tol << "m, "
+    << goal_heading_tol*180.0/M_PI << "deg." << std::endl;
     return true;
 }
 bool TrajectoryRefiner::startHook()
@@ -87,9 +92,8 @@ void TrajectoryRefiner::cleanupHook()
 
 void TrajectoryRefiner::addGoal(){
     waypointsOut.back().heading      = goalPose.getYaw();
-    waypointsOut.back().tol_position = _goal_position_tol.value() > 0 ? _goal_position_tol.value() : 0.05;
-    waypointsOut.back().tol_heading  = _goal_heading_tol.value()  > 0 ? _goal_heading_tol.value()  : 2.0;
-    waypointsOut.back().tol_heading /= 180.0*M_PI;
+    waypointsOut.back().tol_position = goal_position_tol;
+    waypointsOut.back().tol_heading  = goal_heading_tol;
 }
 
 bool TrajectoryRefiner::preprocessPath(){
