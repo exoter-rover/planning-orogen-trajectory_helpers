@@ -139,8 +139,8 @@ void GoalGenerator::updateHook()
 
             // Goal heading change
             double xaxis, yaxis, displacementNorm; 
-            xaxis = -joystick_command.axisValue[1][0];
-            yaxis = -joystick_command.axisValue[0][2];
+            xaxis = -joystick_command.axisValue[2];
+            yaxis = -joystick_command.axisValue[3];
             displacementNorm = xaxis*xaxis + yaxis*yaxis;
             if( displacementNorm > joystickDeadbandSq ){
                 heading = atan2(yaxis,xaxis);
