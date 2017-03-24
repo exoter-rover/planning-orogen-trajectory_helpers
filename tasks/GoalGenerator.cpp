@@ -114,8 +114,8 @@ void GoalGenerator::updateHook()
         if(_raw_command.read(joystick_command) == RTT::NewData)
         {
             // Goal incrementation
-            if(  joystick_command.buttonValue[START]  &&    // Button is pressed down now
-                !joystick_command_prev.buttonValue[START])  // and was not pressed previously 
+            if(  joystick_command.buttons["BTN_START"]  &&    // Button is pressed down now
+                !joystick_command_prev.buttons["BTN_START"])  // and was not pressed previously 
             {
                 if (initialized){
                     // First button press - output the initial, no increment
@@ -128,8 +128,8 @@ void GoalGenerator::updateHook()
             }
             
             // Goal decrementation
-            if(  joystick_command.buttonValue[BACK]  &&    // Button is pressed down now
-                !joystick_command_prev.buttonValue[BACK])  // and was not pressed previously 
+            if(  joystick_command.buttons["BTN_BACK"]  &&    // Button is pressed down now
+                !joystick_command_prev.buttons["BTN_BACK"])  // and was not pressed previously 
             {
                 if (initialized){
                     currentGoal = currentGoal > 0 ? currentGoal-1 : (numPoints-1 );
@@ -139,8 +139,8 @@ void GoalGenerator::updateHook()
 
             // Goal heading change
             double xaxis, yaxis, displacementNorm; 
-            xaxis = -joystick_command.axisValue[2];
-            yaxis = -joystick_command.axisValue[3];
+            xaxis = -joystick_command.axes["ABS_Z"];
+            yaxis = -joystick_command.axes["ABS_RZ"];
             displacementNorm = xaxis*xaxis + yaxis*yaxis;
             if( displacementNorm > joystickDeadbandSq ){
                 heading = atan2(yaxis,xaxis);
