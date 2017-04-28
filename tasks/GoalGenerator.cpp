@@ -114,8 +114,8 @@ void GoalGenerator::updateHook()
         if(_raw_command.read(joystick_command) == RTT::NewData)
         {
             // Goal incrementation
-            if(  joystick_command.buttons["BTN_START"]  &&    // Button is pressed down now
-                !joystick_command_prev.buttons["BTN_START"])  // and was not pressed previously 
+            if(  joystick_command.buttons["BTN_TR2"]  &&    // Button is pressed down now // FIXME: Because of wrong driver mapping, BTN_START is actually called BTN_TR2
+                !joystick_command_prev.buttons["BTN_TR2"])  // and was not pressed previously 
             {
                 if (initialized){
                     // First button press - output the initial, no increment
@@ -128,8 +128,8 @@ void GoalGenerator::updateHook()
             }
             
             // Goal decrementation
-            if(  joystick_command.buttons["BTN_BACK"]  &&    // Button is pressed down now
-                !joystick_command_prev.buttons["BTN_BACK"])  // and was not pressed previously 
+            if(  joystick_command.buttons["BTN_TL2"]  &&    // Button is pressed down now // FIXME: Because of wrong driver mapping, BTN_BACK is actually called BTN_TL2
+                !joystick_command_prev.buttons["BTN_TL2"])  // and was not pressed previously 
             {
                 if (initialized){
                     currentGoal = currentGoal > 0 ? currentGoal-1 : (numPoints-1 );
